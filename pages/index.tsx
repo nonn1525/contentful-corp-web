@@ -2,7 +2,7 @@ import React, { VFC } from "react";
 import Head from "next/head";
 import styled from "styled-components";
 import { createClient } from "contentful";
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
+import { InferGetStaticPropsType, NextPage } from "next";
 import Link from "next/link";
 
 export const getStaticProps = async () => {

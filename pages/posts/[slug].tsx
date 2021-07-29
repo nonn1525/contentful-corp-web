@@ -3,7 +3,8 @@ import { createClient } from "contentful";
 import { GetStaticPaths, InferGetStaticPropsType, NextPage } from "next";
 import { BLOCKS } from "@contentful/rich-text-types";
 import styled from "styled-components";
-import Image from "next/image";
+// import Image from "next/image";
+import ImageComponent from "./ImageComponent";
 
 const client = createClient({
   space: process.env.CTF_SPACE_ID || "",
@@ -42,11 +43,11 @@ type Props = InferGetStaticPropsType<typeof getStaticProps>;
 const Posts: NextPage<Props> = ({ posts }: { posts: any }) => {
   const options = {
     renderNode: {
-      [BLOCKS.EMBEDDED_ASSET]: (node: any, children: any) => {
+      [BLOCKS.EMBEDDED_ASSET]: function ImgFunc(node: any) {
         const src = "https:" + node.data.target.fields.file.url;
         const height = node.data.target.fields.file.details.height;
         const width = node.data.target.fields.file.details.width;
-        return <Image src={src} width={width} height={height} />;
+        return <ImageComponent src={src} width={width} height={height} />;
       },
     },
   };
@@ -55,8 +56,8 @@ const Posts: NextPage<Props> = ({ posts }: { posts: any }) => {
     <SlugStyled>
       <div className="container">
         <h1>{posts.fields.title}</h1>
-        {posts.fields.body.content.map((item: any) => (
-          <div>{documentToReactComponents(item, options)}</div>
+        {posts.fields.body.content.map((item: any, index: number) => (
+          <div key={index}>{documentToReactComponents(item, options)}</div>
         ))}
       </div>
     </SlugStyled>
