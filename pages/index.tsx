@@ -1,30 +1,47 @@
-import React, { VFC } from "react";
-import Head from "next/head";
-import styled from "styled-components";
-import { createClient } from "contentful";
-import { InferGetStaticPropsType, NextPage } from "next";
-import Link from "next/link";
+import React, { useEffect, VFC } from 'react';
+import Head from 'next/head';
+import styled from 'styled-components';
+import { createClient } from 'contentful';
+import { InferGetStaticPropsType, NextPage } from 'next';
+import Link from 'next/link';
 
-export const getStaticProps = async () => {
-  const client = createClient({
-    space: process.env.CTF_SPACE_ID || "",
-    accessToken: process.env.CTF_CDA_ACCESS_TOKEN || "",
-  });
+// export const getStaticProps = async () => {
+//   const client = createClient({
+//     space: process.env.CTF_SPACE_ID || '',
+//     accessToken: process.env.CTF_CDA_ACCESS_TOKEN || '',
+//   });
 
-  const response: any = await client.getEntries({
-    content_type: "blogPost",
-  });
+//   const response: any = await client.getEntries({
+//     content_type: 'blogPost',
+//   });
 
-  return {
-    props: {
-      posts: response.items,
-    },
+//   return {
+//     props: {
+//       posts: response.items,
+//     },
+//   };
+// };
+
+// type Props = InferGetStaticPropsType<typeof getStaticProps>;
+
+const Home = () => {
+  const [posts, setPosts] = React.useState<any[]>();
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  const getPosts = async () => {
+    const client = createClient({
+      space: process.env.NEXT_PUBLIC_CTF_SPACE_ID || '',
+      accessToken: process.env.NEXT_PUBLIC_CTF_CDA_ACCESS_TOKEN || '',
+    });
+
+    const response: any = await client.getEntries({
+      content_type: 'blogPost',
+    });
+    setPosts(response.items);
   };
-};
 
-type Props = InferGetStaticPropsType<typeof getStaticProps>;
-
-const Home: NextPage<Props> = ({ posts }) => {
   return (
     <div>
       <Head>
@@ -33,9 +50,9 @@ const Home: NextPage<Props> = ({ posts }) => {
       <PostListStyled>
         <h3>記事一覧</h3>
         <ul>
-          {posts.map((item: any) => (
+          {posts?.map((item: any) => (
             <li key={item.sys.id}>
-              <Link href={"/posts/" + item.sys.id}>
+              <Link href={'/posts/' + item.sys.id}>
                 <a>{item.fields.title}</a>
               </Link>
             </li>
