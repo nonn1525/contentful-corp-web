@@ -1,13 +1,9 @@
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { createClient } from "contentful";
-import {
-  GetStaticPaths,
-  GetStaticProps,
-  InferGetStaticPropsType,
-  NextPage,
-} from "next";
+import { GetStaticPaths, InferGetStaticPropsType, NextPage } from "next";
 import { BLOCKS } from "@contentful/rich-text-types";
 import styled from "styled-components";
+import Image from "next/image";
 
 const client = createClient({
   space: process.env.CTF_SPACE_ID || "",
@@ -50,7 +46,7 @@ const Posts: NextPage<Props> = ({ posts }: { posts: any }) => {
         const src = "https:" + node.data.target.fields.file.url;
         const height = node.data.target.fields.file.details.height;
         const width = node.data.target.fields.file.details.width;
-        return <img src={src} width={width} height={height} />;
+        return <Image src={src} width={width} height={height} />;
       },
     },
   };
