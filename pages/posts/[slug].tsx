@@ -45,8 +45,8 @@ const Posts: NextPage<Props> = ({ posts }: { posts: any }) => {
     renderNode: {
       [BLOCKS.EMBEDDED_ASSET]: function ImgFunc(node: any) {
         const src = "https:" + node.data.target.fields.file.url;
-        const height = node.data.target.fields.file.details.height;
-        const width = node.data.target.fields.file.details.width;
+        const height = node.data.target.fields.file.details.image.height;
+        const width = node.data.target.fields.file.details.image.width;
         return <ImageComponent src={src} width={width} height={height} />;
       },
     },
