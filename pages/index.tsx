@@ -7,8 +7,8 @@ import Link from "next/link";
 
 export const getStaticProps = async () => {
   const client = createClient({
-    space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID || "",
-    accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID || "",
+    space: process.env.CTF_SPACE_ID || "",
+    accessToken: process.env.CTF_CDA_ACCESS_TOKEN || "",
   });
 
   const response: any = await client.getEntries({
