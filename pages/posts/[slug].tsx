@@ -7,8 +7,8 @@ import styled from "styled-components";
 import ImageComponent from "./ImageComponent";
 
 const client = createClient({
-  space: process.env.CTF_SPACE_ID || "",
-  accessToken: process.env.CTF_CDA_ACCESS_TOKEN || "",
+  space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID || "",
+  accessToken: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID || "",
 });
 
 export const getStaticPaths: GetStaticPaths = async () => {
